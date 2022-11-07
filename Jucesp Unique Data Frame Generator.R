@@ -27,4 +27,9 @@ datalatin1<-datalatin1%>%select(-Município,-MunicÃ.pio)
 datalatin1<-full_join(datalatin1,municiplatin1)
 write.csv(datalatin1,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_latin1.csv',row.names=FALSE,fileEncoding = "LATIN1")
 
-antijoin<-anti_join(datautf8,datalatin1)
+#antijoin<-anti_join(datautf8,datalatin1)
+
+dataplot<-datautf8%>%group_by(Month,Year)%>%summarise(count=n())
+dataplot$date<-as.Date(paste(dataplot$Year,"-",dataplot$Month,"-01",sep=""))
+ggplot(dataplot, aes(x = date, y = count)) +
+  geom_line() 
