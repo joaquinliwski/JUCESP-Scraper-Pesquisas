@@ -33,7 +33,7 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
 driver2 = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(3,13,1)
+months = range(10,13,1)
 for month in months:
     year=2010
     types = [ "6", "7", "8", "9", "10","3", "4", "5",
@@ -242,14 +242,14 @@ for month in months:
         
         #Select Date Fim
         txtMunicipio = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_txtDataAberturaFim')
-        endmonth= '20/'+str("%02d" % month)+'/'+str(year)
+        endmonth= '21/'+str("%02d" % month)+'/'+str(year)
         txtMunicipio.send_keys(endmonth)
         
         #Select all firms created (not only the active ones) "Mostrar somente empresas ativas"
         chkActive = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
         btPesquisar = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
         btPesquisar.click()
-        seconds=10
+        seconds=4
         try:
             data_table = WebDriverWait(driver2,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
               
@@ -412,7 +412,7 @@ for month in months:
         
         #Select Date Inicio
         txtMunicipio = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_txtDataAberturaInicio')
-        initmonth= '21/'+str("%02d" % month)+'/'+str(year)
+        initmonth= '22/'+str("%02d" % month)+'/'+str(year)
         txtMunicipio.send_keys(initmonth)
         
         #Select Date Fim
@@ -424,7 +424,7 @@ for month in months:
         chkActive = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
         btPesquisar = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
         btPesquisar.click()
-        seconds=10
+        seconds=4
         try:
             data_table = WebDriverWait(driver2,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
               

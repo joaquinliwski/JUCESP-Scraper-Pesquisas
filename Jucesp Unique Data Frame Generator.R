@@ -15,7 +15,11 @@ setwd("C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/utf8")
 datautf8<-list.files()%>%lapply(function(i){
   read.csv(i,sep=",",colClasses=c(NIRE="character"))%>%distinct()
 })%>% bind_rows()
+datautf8<-lapply(datautf8,iconv, from = 'UTF-8', to = 'ASCII//TRANSLIT')
+
 write.csv(datautf8,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_utf8.csv',row.names=FALSE,fileEncoding = "LATIN1")
+
+
 
 #Merge Latin1
 #setwd("C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/latin1") 
