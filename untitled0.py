@@ -33,9 +33,9 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
 driver2 = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(3,13,1)
+months = range(5,13,1)
 for month in months:
-    year=2012
+    year=2014
     types = [ "6", "7", "8", "9", "10","3", "4", "5",
              "11", "12", "13", "14", "15", "16", "17", "18", "19",
              "20", "21", "9999","1", "2"]
@@ -424,7 +424,7 @@ for month in months:
         chkActive = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
         btPesquisar = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
         btPesquisar.click()
-        seconds=4
+        seconds=3
         try:
             data_table = WebDriverWait(driver2,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
               
@@ -598,7 +598,7 @@ for month in months:
         chkActive = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
         btPesquisar = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
         btPesquisar.click()
-        seconds=4
+        seconds=3
         try:
             data_table = WebDriverWait(driver2,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
               
@@ -773,7 +773,7 @@ for month in months:
         chkActive = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
         btPesquisar = driver2.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
         btPesquisar.click()
-        seconds=4
+        seconds=3
         try:
             data_table = WebDriverWait(driver2,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
               
