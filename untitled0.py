@@ -33,7 +33,7 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
 driver2 = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(9,13,1)
+months = range(12,13,1)
 for month in months:
     year=2016
     types = [ "6", "7", "8", "9", "10","3", "4", "5",
@@ -87,7 +87,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -145,7 +145,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
@@ -262,7 +262,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -320,7 +320,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
@@ -436,7 +436,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -494,7 +494,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
@@ -611,7 +611,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -669,7 +669,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
@@ -785,7 +785,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -843,7 +843,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
@@ -960,7 +960,7 @@ for month in months:
             #While looping month-year
             while int(lastpageresult) != int(totalpageresult):
                 #Scrape table from a page
-                time.sleep(1.2)
+                time.sleep(1.1)
                 tabletemp = pd.read_html(driver2.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
                 tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
                 tabletemp['Month']= str(month)
@@ -1018,7 +1018,7 @@ for month in months:
                 #Click next page button
                 try:
                     driver2.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_lbtText').click()
-                    time.sleep(1.2)
+                    time.sleep(1.1)
                 except: 
                     pass 
                 #Changing while condition
