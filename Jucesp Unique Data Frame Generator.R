@@ -18,9 +18,15 @@ datautf8<-list.files()%>%lapply(function(i){
 #datautf8<-lapply(datautf8,iconv, from = 'UTF-8', to = 'ASCII//TRANSLIT')
 
 datautf8<-datautf8%>%mutate_if(is.character, 
-                               function(col) iconv(col, from = 'UTF-8', to='ASCII//TRANSLIT'))
+                               function(col) iconv(col, from = 'UTF-8', to='ASCII//TRANSLIT'))%>%distinct()
 
-write.csv(datautf8,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_utf8.csv',row.names=FALSE,fileEncoding = "LATIN1")
+
+data_00_10<-datautf8%>%filter(Year<=2010)
+write.csv(data_00_10,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_00_10.csv',row.names=FALSE,fileEncoding = "LATIN1")
+data_11_20<-datautf8%>%filter(Year>2010,Year<=2020)
+write.csv(data_11_20,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_11_20.csv',row.names=FALSE,fileEncoding = "LATIN1")
+data_21_22<-datautf8%>%filter(Year>2020,Year<=2022)
+write.csv(data_21_22,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_21_22.csv',row.names=FALSE,fileEncoding = "LATIN1")
 
 
 
