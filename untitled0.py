@@ -33,9 +33,9 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
 driver5 = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(7,13,1)
+months = range(6,9,1)
 for month in months:
-    year=2020
+    year=2019
     types1 = [ "1", "2"]
     types2 = ["6", "7", "8", "9", "10","3", "4", "5",
              "11", "12", "13", "14", "15", "16", "17", "18", "19",
@@ -1971,10 +1971,10 @@ for month in months:
         
     #SAVE THE DATA FRAME
     try:
-        df.to_csv('C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/latin1/'+str(year)+'_'+str(month)+'_'+'v2_Pesquisas_Jucesp_latin1.csv',index=False,encoding='latin1')
+        df.to_csv('C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/latin1/'+str(year)+'_'+str(month)+'_'+'Pesquisas_Jucesp_latin1.csv',index=False,encoding='latin1')
     except: 
         pass
-    df.to_csv('C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/utf8/'+str(year)+'_'+str(month)+'_'+'v2_Pesquisas_Jucesp_utf-8.csv',index=False,encoding='utf-8')
+    df.to_csv('C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/utf8/'+str(year)+'_'+str(month)+'_'+'Pesquisas_Jucesp_utf-8.csv',index=False,encoding='utf-8')
 
         
 #Quit Webdriver
