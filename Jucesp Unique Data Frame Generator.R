@@ -27,6 +27,8 @@ data_11_20<-datautf8%>%filter(Year>2010,Year<=2020)
 write.csv(data_11_20,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_11_20.csv',row.names=FALSE,fileEncoding = "LATIN1")
 data_21_22<-datautf8%>%filter(Year>2020,Year<=2022)
 write.csv(data_21_22,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_21_22.csv',row.names=FALSE,fileEncoding = "LATIN1")
+data_1900<-datautf8%>%filter(Year<2000)
+write.csv(data_1900,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_1900.csv',row.names=FALSE,fileEncoding = "LATIN1")
 
 
 
