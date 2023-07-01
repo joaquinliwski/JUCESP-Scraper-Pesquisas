@@ -47,7 +47,7 @@ write.csv(data_1900,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCE
 
 obs9990<-datautf8%>%group_by(Year,Month,Type)%>%summarise(count=n())#%>%filter(count==9900)
 
-dataplot<-datautf8%>%group_by(Month,Year)%>%summarise(count=n())
+dataplot<-datautf8%>%filter(Year>1960,Year<2000)%>%group_by(Month,Year)%>%summarise(count=n())
 dataplot$date<-as.Date(paste(dataplot$Year,"-",dataplot$Month,"-01",sep=""))
 ggplot(dataplot, aes(x = date, y = count)) +
   geom_line() 

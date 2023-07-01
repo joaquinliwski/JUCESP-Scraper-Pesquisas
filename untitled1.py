@@ -1,249 +1,46 @@
 # -*- coding: utf-8 -*-
 """
-Scraper Pesquisas - Junta Comercial do Estado de Sao Paulo
+Created on Fri Feb 24 10:55:57 2023
 
-https://www.jucesponline.sp.gov.br/
-
-Created on Wed Nov  2 12:53:23 2022
-
-@author: Joaquin Liwski
+@author: Joaquin
 """
 
-#Import Libraries
-from selenium import webdriver
-from selenium.webdriver.common.by import By 
-from selenium.webdriver.support.ui import WebDriverWait 
-from selenium.webdriver.support import expected_conditions as EC 
-from selenium.webdriver.support.select import Select
-from selenium.common.exceptions import TimeoutException
-from selenium.common.exceptions import NoSuchElementException 
-from selenium.common.exceptions import StaleElementReferenceException
-import calendar
+import os
 import pandas as pd
-import time
-import re
-import winsound
+
+#%% OPEN FILES 
+
+directory = "C:/Users/Joaquin/Desktop/UdeSA/Tesis/Datos/CSV Files"
+os.chdir(directory)
+
+#RAIS
+# Get list of file names
+file_list = [file for file in os.listdir(directory) if "employee" in file]
+# Concatenate data frames
+df_list = []
+for file in file_list:
+    file_path = os.path.join(directory, file)
+    df = pd.read_csv(file_path)  
+    df_list.append(df)
+RAIS = pd.concat(df_list)
+# Delete original data frames from memory
+del df_list[:]
 
 
-#Frequency for beep
-frequency = 2500  # Set Frequency To 2500 Hertz
-duration = 1000  # Set Duration To 1000 ms == 1 second
+#PDFs
+# Get list of file names
+file_list = [file for file in os.listdir(directory) if "trial" in file]
+# Concatenate data frames
+df_list = []
+for file in file_list:
+    file_path = os.path.join(directory, file)
+    df = pd.read_csv(file_path)  
+    df_list.append(df)
+PDFs = pd.concat(df_list)
+# Delete original data frames from memory
+del df_list[:]
+
+#Ownership
+ownership = pd.read_csv('partners_nov2022.csv')
 
 
-                                                                     
-
-#LOOP OVER YEAR AND MONTH, EACH TIME YOU'LL HAVE TO ENTER CAPTCHA
-driver = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(7,13,1)
-for year in list(range(1960,1980,1)):
-    #    for month in list(range(1,13,1)):
-    for month in months:
-        #Sacaron types 10 16 y 21
-        types = [ "1", "6", "7", "8", "9", "3", "4", "5",
-                 "11", "12", "13", "14", "15",  "18", "19",
-                   "9999", "2"]
-        
-        #Create data frame to fill
-        df = pd.DataFrame(columns=['NIRE', 'Empresa', 'Município', 'Month','Year'])
-    
-        
-        #Loop over business types
-        for type in types:
-            #Search Until Captcha - Open Driver
-            #Get Web Page
-            driver.get('https://www.jucesponline.sp.gov.br/BuscaAvancada.aspx?IDProduto=') #Open web page
-            
-            seconds=8
-            #Date variable - LAST DAY OF MONTH 
-            _, last_day = calendar.monthrange(year, month)
-            #Select Type
-            try:
-                txtTipo = Select(driver.find_element("id",'ctl00_cphContent_frmBuscaAvancada_ddlTipoEmpresa')) #Select ID Tipo de Empresa
-            except NoSuchElementException:
-                data_table = WebDriverWait(driver,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_frmBuscaAvancada_ddlTipoEmpresa'))) 
-            txtTipo.select_by_value(type) #By value
-            #txtTipo.select_by_visibleText("Empresário") #By text
-            #txtTipo.select_by_index(1) #By index
-            
-            #Select Date Inicio
-            txtMunicipio = driver.find_element('id','ctl00_cphContent_frmBuscaAvancada_txtDataAberturaInicio')
-            initmonth= '01/'+str("%02d" % month)+'/'+str(year)
-            txtMunicipio.send_keys(initmonth)
-            
-            #Select Date Fim
-            txtMunicipio = driver.find_element('id','ctl00_cphContent_frmBuscaAvancada_txtDataAberturaFim')
-            endmonth= str(last_day)+'/'+str("%02d" % month)+'/'+str(year)
-            txtMunicipio.send_keys(endmonth)
-            
-            #Select all firms created (not only the active ones) "Mostrar somente empresas ativas"
-            chkActive = driver.find_element('id','ctl00_cphContent_frmBuscaAvancada_chkAtivas').click()
-            btPesquisar = driver.find_element('id','ctl00_cphContent_frmBuscaAvancada_btPesquisar')
-            btPesquisar.click()
-            
-            try:
-                data_table = WebDriverWait(driver,seconds).until(EC.presence_of_element_located((By.ID,'ctl00_cphContent_gdvResultadoBusca_gdvContent')))
-            
-                #Defining conditions for loop while month-year
-                totalpageresult=1
-                lastpageresult=2
-                #In loop I'll redefine them, I just need them to be different, thats the condition to keep looping
-                
-                #While looping month-year
-                while int(lastpageresult) != int(totalpageresult):
-                    #Scrape table from a page
-                    time.sleep(0.9)
-                    tabletemp = pd.read_html(driver.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
-                    tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
-                    tabletemp['Month']= str(month)
-                    tabletemp['Year'] = str(year)
-                    if type == "1":
-                        tabletemp['Type']="Empresario"
-                    elif type == "2":
-                        tabletemp['Type']="Sociedade Limitada"
-                    elif type == "3":
-                        tabletemp['Type']="Sociedade por Acoes"
-                    elif type == "4":
-                        tabletemp['Type']="Cooperativa"
-                    elif type == "5":
-                        tabletemp['Type']="Consorcio"
-                    elif type == "6":
-                        tabletemp['Type']="Grupo"
-                    elif type == "7":
-                        tabletemp['Type']="Comandita Simple"
-                    elif type == "8":
-                        tabletemp['Type']="Comandita por Acoes"
-                    elif type == "9":
-                        tabletemp['Type']="Capital Industria"
-                    #elif type == "10":
-                        #elif type == "10":
-                    elif type == "11":
-                        tabletemp['Type']="Armazens Gerais Ltda"
-                    elif type == "12":
-                        tabletemp['Type']="Empresa Estrangeira"
-                    elif type == "13":
-                        tabletemp['Type']="Binacional Ltda"
-                    elif type == "14":
-                        tabletemp['Type']="Sociedade em Nome Coletivo"
-                    elif type == "15":
-                        tabletemp['Type']="Empresa Publica"
-                    #elif type == "16":
-                        #tabletemp['Type']="Subsidiaria Integral"
-                    elif type == "17":
-                        tabletemp['Type']="Sociedade em Conta de Participacao"
-                    elif type == "18":
-                        tabletemp['Type']="Armazens Gerais S/A"
-                    elif type == "19":
-                        tabletemp['Type']="Binacional S/A"
-                   # elif type == "21":
-                        #tabletemp['Type']="Armazens Gerais Empresario"
-                    else:
-                        tabletemp['Type'] = "Outros"
-                    
-                    #Append this page to new table
-                    df = df.append(tabletemp)
-                    
-                    #Changing while condition
-                    noninteresting, lastpageresult = re.findall('\d+',driver.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_lblResults').text.replace('.',''))
-                    totalpageresult = re.findall('\d+',driver.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_lblResultCount').text.replace('.',''))[0]
-                                
-                    #Click next page button
-                    try:
-                        driver.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_btrNext_imgCss').click()
-                        time.sleep(2)
-                    except NoSuchElementException:
-                        pass
-                    except: 
-                        pass 
-                    #Changing while condition
-                    #noninteresting, lastpageresult = re.findall('\d+',driver.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_lblResults').text.replace('.',''))
-                    #totalpageresult = re.findall('\d+',driver.find_element('id','ctl00_cphContent_gdvResultadoBusca_pgrGridView_lblResultCount').text.replace('.',''))[0]
-                    
-                    print(f'Month {month} Year {year}, {lastpageresult} rows out of {totalpageresult}. Company Type "{type}"')
-                
-                
-                #Scrape Last Page
-                tabletemp = pd.read_html(driver.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
-                tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
-                tabletemp['Month']= str(month)
-                tabletemp['Year'] = str(year)
-                if type == "1":
-                    tabletemp['Type']="Empresario"
-                elif type == "2":
-                    tabletemp['Type']="Sociedade Limitada"
-                elif type == "3":
-                    tabletemp['Type']="Sociedade por Acoes"
-                elif type == "4":
-                    tabletemp['Type']="Cooperativa"
-                elif type == "5":
-                    tabletemp['Type']="Consorcio"
-                elif type == "6":
-                    tabletemp['Type']="Grupo"
-                elif type == "7":
-                    tabletemp['Type']="Comandita Simple"
-                elif type == "8":
-                    tabletemp['Type']="Comandita por Acoes"
-                elif type == "9":
-                    tabletemp['Type']="Capital Industria"
-                #elif type == "10":
-                    #tabletemp['Type']="Solidaria"
-                elif type == "11":
-                    tabletemp['Type']="Armazens Gerais Ltda"
-                elif type == "12":
-                    tabletemp['Type']="Empresa Estrangeira"
-                elif type == "13":
-                    tabletemp['Type']="Binacional Ltda"
-                elif type == "14":
-                    tabletemp['Type']="Sociedade em Nome Coletivo"
-                elif type == "15":
-                    tabletemp['Type']="Empresa Publica"
-                #elif type == "16":
-                    #tabletemp['Type']="Subsidiaria Integral"
-                elif type == "17":
-                    tabletemp['Type']="Sociedade em Conta de Participacao"
-                elif type == "18":
-                    tabletemp['Type']="Armazens Gerais S/A"
-                elif type == "19":
-                    tabletemp['Type']="Binacional S/A"
-               # elif type == "21":
-                    #tabletemp['Type']="Armazens Gerais Empresario"
-                else:
-                    tabletemp['Type'] = "Outros"
-                
-                #Append this page to new table
-                df = df.append(tabletemp)
-                   
-                    
-                #Scrape table from a LAST page
-                #tabletemp = pd.read_html(driver.find_element('xpath','//*[@id="ctl00_cphContent_gdvResultadoBusca_gdvContent"]').get_attribute('outerHTML'))[0]
-                #tabletemp = tabletemp.drop(tabletemp.columns[3], axis=1)
-                #tabletemp['Month']= str(month)
-                #tabletemp['Year'] = str(year)
-                
-                #Append this LAST page to new table
-                #df = df.append(tabletemp)
-                
-            except TimeoutException:
-                pass
-            except StaleElementReferenceException:
-                continue
-            except NoSuchElementException:
-                pass
-            print(f"Final de mes {month} ano {year} empresa {type} tanda 1")
-            #Get ready to introduce new captcha
-            #winsound.Beep(frequency, duration) #Makes a sound letting you know its time
-        
-        
-        
-        #SAVE THE DATA FRAME
-        try:
-            df.to_csv('latin1/'+str(year)+'_'+str(month)+'_'+'Pesquisas_Jucesp_latin1.csv',index=False,encoding='latin1')
-        except NoSuchElementException:
-            pass
-        except: 
-            pass
-        df.to_csv('utf8/'+str(year)+'_'+str(month)+'_'+'Pesquisas_Jucesp_utf-8.csv',index=False,encoding='utf-8')
-
-        
-#Quit Webdriver
-driver.quit()
-print("That's all folks!")

@@ -34,11 +34,11 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 
 #LOOP OVER YEAR AND MONTH, EACH TIME YOU'LL HAVE TO ENTER CAPTCHA
 driver = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = range(1,7,1)
-for year in list(range(1960,1980,1)):
+months = range(11,13,1)
+for year in list(range(2022,2023,1)):
     #    for month in list(range(1,13,1)):
     for month in months:
-        #Sacaron types 10 16 y 21
+        #Sacaron types 10 16 17 20 y 21
         types = [ "1", "6", "7", "8", "9", "3", "4", "5",
                  "11", "12", "13", "14", "15",  "18", "19",
                  "9999", "2"]

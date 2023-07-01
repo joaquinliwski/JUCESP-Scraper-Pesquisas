@@ -33,13 +33,12 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
 driver5 = webdriver.Chrome(executable_path = r'C:\Program Files\chromedriver.exe') #Execute driver
-months = [10]#range(8,13,1)
+months = range(12,13,1)
 for month in months:
     year=2022
     types1 = [ "1", "2"]
-    types2 = ["6", "7", "8", "9", "10","3", "4", "5",
-             "11", "12", "13", "14", "15", "16", "17", "18", "19",
-             "20", "21", "9999"]
+    types2 = ["6", "7", "8", "9", "3", "4", "5",
+             "11", "12", "13", "14", "15","18", "19", "9999"]
     
     #Create data frame to fill
     df = pd.DataFrame(columns=['NIRE', 'Empresa', 'Município', 'Month','Year'])
