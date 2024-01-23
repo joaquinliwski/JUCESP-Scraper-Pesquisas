@@ -19,14 +19,14 @@ datautf8<-list.files()%>%lapply(function(i){
 
 datautf8<-datautf8%>%mutate_if(is.character, 
                                function(col) iconv(col, from = 'UTF-8', to='ASCII//TRANSLIT'))%>%distinct()
-data_00_10<-datautf8%>%filter(Year<=2010)
-write.csv(data_00_10,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_00_10.csv',row.names=FALSE,fileEncoding = "LATIN1")
-data_11_20<-datautf8%>%filter(Year>2010,Year<=2020)
-write.csv(data_11_20,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_11_20.csv',row.names=FALSE,fileEncoding = "LATIN1")
-data_21_23<-datautf8%>%filter(Year>2020)
-write.csv(data_21_23,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_21_23.csv',row.names=FALSE,fileEncoding = "LATIN1")
-data_1900<-datautf8%>%filter(Year<2000)
-write.csv(data_1900,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_1900.csv',row.names=FALSE,fileEncoding = "LATIN1")
+#data_00_10<-datautf8%>%filter(Year<=2010)
+#write.csv(data_00_10,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_00_10.csv',row.names=FALSE,fileEncoding = "LATIN1")
+#data_11_20<-datautf8%>%filter(Year>2010,Year<=2020)
+#write.csv(data_11_20,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_11_20.csv',row.names=FALSE,fileEncoding = "LATIN1")
+data_21_24<-datautf8%>%filter(Year>2020)
+write.csv(data_21_24,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_21_24.csv',row.names=FALSE,fileEncoding = "LATIN1")
+#data_1900<-datautf8%>%filter(Year<2000)
+#write.csv(data_1900,file='C:/Users/Joaquin/Desktop/JUCESP-Scraper-Pesquisas/JUCESP_1900.csv',row.names=FALSE,fileEncoding = "LATIN1")
 
 
 

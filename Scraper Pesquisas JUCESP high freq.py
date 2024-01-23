@@ -15,6 +15,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait 
 from selenium.webdriver.support import expected_conditions as EC 
 from selenium.webdriver.support.select import Select
+from selenium.webdriver.chrome.service import Service
 import calendar
 import pandas as pd
 import time
@@ -32,8 +33,12 @@ duration = 1000  # Set Duration To 1000 ms == 1 second
 #LOOP OVER YEAR AND MONTH, EACH TIME YOU'LL HAVE TO ENTER CAPTCHA
 #for year in list(range(2000,2023,1)):
 #    for month in list(range(1,13,1)):
-driver5 = webdriver.Chrome(executable_path = r'C:/Program Files/chromedriver.exe') #Execute driver
-months = range(6,7,1)
+service = Service(executable_path= r'C:\Program Files\chromedriver.exe')
+
+# Open Driver
+driver5 = webdriver.Chrome(service=service)
+#driver5 = webdriver.Chrome(executable_path = r'C:/Program Files/chromedriver.exe') #Execute driver
+months = range(11,12,1)
 for month in months:
     year=2023
     types1 = [ "1", "2"]
@@ -244,8 +249,8 @@ for month in months:
             
             #Select Date Fim
             txtMunicipio = driver5.find_element('id','ctl00_cphContent_frmBuscaAvancada_txtDataAberturaFim')
-            j_1=j+1
-            endmonth= str("%02d" % j_1)+'/'+str("%02d" % month)+'/'+str(year)
+            #j_1=j+1
+            endmonth= str("%02d" % j)+'/'+str("%02d" % month)+'/'+str(year)
             txtMunicipio.send_keys(endmonth)
             
             #Select all firms created (not only the active ones) "Mostrar somente empresas ativas"
